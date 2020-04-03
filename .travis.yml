@@ -8,6 +8,6 @@ script:
 deploy:
     provider: azure_web_apps
     site: webapp-python-docker
-
+    verbose: true
 
     
