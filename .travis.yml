@@ -4,4 +4,4 @@ services:
 before_install:
     - docker build -t myapp .
 script: 
-    - docker run myapp
+    - docker run myapp python ./test.py
