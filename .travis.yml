@@ -5,3 +5,9 @@ before_install:
     - docker build -t myapp .
 script: 
     - docker run myapp python ./test.py
+deploy:
+    provider: azure_web_apps
+    site: webapp-python-docker
+
+
+    
