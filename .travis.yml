@@ -3,12 +3,11 @@ sudo: required
 services: 
     - docker
 before_install:
-    - docker build -t myapp .
-script: 
-    - docker run myapp python ./test.py
+    - docker build -t webappythondockerpacr.azurecr.io/app-hello-world:v1 .
+#script: 
+  #  - docker run myapp python ./test.py
 deploy:
-    provider: azure_web_apps
-    site: webapp-python-docker
-    verbose: true
+    provider: script
+    script: docker push webappythondockerpacr.azurecr.io/app-hello-world:v1
 
     
