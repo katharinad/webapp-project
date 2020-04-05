@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Log into Azure
+az login --username $AZURE_USERNAME --password $AZURE_PASSWORD 
+
+# Docker log into Azure Container Registry
+az acr login --name webappythondockerpacr
+
+# Push container to Azure Container Registry
+docker push webappythondockerpacr.azurecr.io/app-hello-world:v1
+#docker push $ACR_NAME.azurecr.io/$DOCKER_IMAGE_NAME:$TRAVIS_COMMIT
