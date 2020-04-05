@@ -10,5 +10,12 @@ def hello():
     except Exception as e:
         print(e)
 
+@app.route("/Katha")
+def hello():
+    try:  
+        return "Hello Katha!!!"
+    except Exception as e:
+        print(e)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int("5000"),debug=True)
