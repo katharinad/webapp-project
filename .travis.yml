@@ -12,8 +12,8 @@ script:
     - docker build -t webappythondockerpacr.azurecr.io/app-hello-world:v1 .
 #script: 
   #  - docker run myapp python ./test.py
-#deploy:
-#    provider: script
-#    script: bash scripts/docker_push 
+deploy:
+    provider: script
+    script: bash scripts/docker_push 
 
     
