@@ -11,7 +11,7 @@ def hello():
         print(e)
 
 @app.route("/Katha")
-def hello():
+def hello_katha():
     try:  
         return "Hello Katha!!!"
     except Exception as e:
