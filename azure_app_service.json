@@ -1,0 +1,251 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_webapp_python_docker_name": {
+            "defaultValue": "webapp-python-docker",
+            "type": "String"
+        },
+        "serverfarms_ASP_WebappprojectRG_a04c_externalid": {
+            "defaultValue": "/subscriptions/8bcf3883-56a5-449b-9d1e-644cbc7b54fc/resourceGroups/WebappprojectRG/providers/Microsoft.Web/serverfarms/ASP-WebappprojectRG-a04c",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('sites_webapp_python_docker_name')]",
+            "location": "West Europe",
+            "kind": "app,linux,container",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('sites_webapp_python_docker_name'), '.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('sites_webapp_python_docker_name'), '.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_ASP_WebappprojectRG_a04c_externalid')]",
+                "reserved": true,
+                "isXenon": false,
+                "hyperV": false,
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": false,
+                "redundancyMode": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/web')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "linuxFxVersion": "DOCKER|webappythondockerpacr.azurecr.io/app-hello-world:v1",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2019",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$webapp-python-docker",
+                "scmType": "LocalGit",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": true,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": true
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": true,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/3eb498dcecba64354bd8dec22f94f5d09c3c3264')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "katharina.dormann@gmx.de",
+                "author": "Katharina Dormann",
+                "deployer": "katharinad",
+                "message": "pip install globally",
+                "start_time": "2020-04-03T13:22:39.9900229Z",
+                "end_time": "2020-04-03T13:22:41.6866354Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/506038e89e9c26a243af18f615963a3e73c78d9a')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "katharina.dormann@gmx.de",
+                "author": "Katharina Dormann",
+                "deployer": "katharinad",
+                "message": "test change",
+                "start_time": "2020-04-04T09:33:30.5594943Z",
+                "end_time": "2020-04-04T09:33:32.9771156Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/51e692c7e389cfe058c2ad94786ea28a97b2120e')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "katharina.dormann@gmx.de",
+                "author": "Katharina Dormann",
+                "deployer": "katharinad",
+                "message": "added gunicorn to Dockerfile",
+                "start_time": "2020-04-04T17:59:21.8204756Z",
+                "end_time": "2020-04-04T17:59:24.5485197Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/52b69aaa1fafdd9a77f827fcde14773623aeff87')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "katharina.dormann@gmx.de",
+                "author": "Katharina Dormann",
+                "deployer": "katharinad",
+                "message": "language:python",
+                "start_time": "2020-04-03T13:41:18.6163251Z",
+                "end_time": "2020-04-03T13:41:20.7039855Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/b82e7e7af077c7bf01065dcecf90746de494ae73')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "katharina.dormann@gmx.de",
+                "author": "Katharina Dormann",
+                "deployer": "katharinad",
+                "message": "adding verbose: true",
+                "start_time": "2020-04-03T13:28:42.190172Z",
+                "end_time": "2020-04-03T13:28:44.2132096Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/e862fbaf205951fb194050777346d3ca241aa133')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "katharina.dormann@gmx.de",
+                "author": "Katharina Dormann",
+                "deployer": "katharinad",
+                "message": "added travis deploy config",
+                "start_time": "2020-04-03T12:51:17.7449125Z",
+                "end_time": "2020-04-03T12:51:20.8293523Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_webapp_python_docker_name'), '/', parameters('sites_webapp_python_docker_name'), '.azurewebsites.net')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_python_docker_name'))]"
+            ],
+            "properties": {
+                "siteName": "webapp-python-docker",
+                "hostNameType": "Verified"
+            }
+        }
+    ]
+}
