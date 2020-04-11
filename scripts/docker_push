@@ -4,8 +4,8 @@
 az login --service-principal --username $AZURE_SP_USERNAME --password $AZURE_SP_PASSWORD --tenant $AZURE_SP_TENANT 
 
 # Docker log into Azure Container Registry
-az acr login --name webappythondockerpacr
+az acr login --name webappythondockerpacrnew
 
 # Push container to Azure Container Registry
-docker push webappythondockerpacr.azurecr.io/app-hello-world:v1
+docker push webappythondockerpacrnew.azurecr.io/app-hello-world:v1
 #docker push $ACR_NAME.azurecr.io/$DOCKER_IMAGE_NAME:$TRAVIS_COMMIT
